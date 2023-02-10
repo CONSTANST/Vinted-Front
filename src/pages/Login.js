@@ -1,12 +1,15 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {useCookies} from "react-cookie";
+import {Link, useNavigate} from "react-router-dom";
+// import {useCookies} from "react-cookie";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [cookies, setCookie] = useCookies(["token"]);
-
+  const [error, setError] = useState(null);
+  // const [cookies, setCookie] = useCookies(["token"]);
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -14,14 +17,36 @@ const Login = () => {
         "https://lereacteur-vinted-api.herokuapp.com/user/login",
         {email, password}
       );
-      setCookie("token", response.data.token);
+      if (response.data.token) {
+        Cookies.set("token-vinted", response.data.token, {expires: 14});
+        navigate("/");
+      }
+      // setCookie("token", response.data.token);
     } catch (error) {
-      console.error(error);
+      console.log(error.response.data);
+      console.log(error.response.status);
+      if (error.response.data.message === "User not found") {
+        setError("Veuillez utiliser un mail valide");
+      }
+      if (error.response.data.message === "Missing parameters") {
+        setError("veullez remplir tous les champs s'il vous plais.");
+      }
+      // setError(err.message);
+      // console.error(error.message);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignContent: "center",
+        height: "100vh",
+      }}
+    >
       <label>
         Email:
         <input
@@ -39,6 +64,8 @@ const Login = () => {
         />
       </label>
       <button type="submit">Se connecter</button>
+      {error && <div style={{color: "red"}}>{error}</div>}
+      <Link to="/signup"> Pas encore compte Inscris-toi</Link>
     </form>
   );
 };
