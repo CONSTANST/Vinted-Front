@@ -16,8 +16,8 @@ const Header = ({handleToken, token}) => {
       const response = await axios.get(
         `https://lereacteur-vinted-api.herokuapp.com/offers?title=${title}&priceMin=${priceMin}&priceMax=${priceMax}&sort=${sort}`
       );
-
-      setOffers(response.data);
+      // console.log(response.data.offers);
+      setOffers(response.data.offers);
       setError(null);
     } catch (e) {
       setError("Une erreur s'est produite lors du filtrage des offres.");
