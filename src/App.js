@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 // Component
 import Header from "./components/Header";
 import Cookies from "js-cookie";
+import Publish from "./pages/Publish";
 
 function App() {
   const [token, setToken] = useState(Cookies.get("token-vinted") || null);
@@ -31,6 +32,7 @@ function App() {
         <Route path="/offer/:id" element={<Offer />} />
         <Route path="/signup" element={<SignUp handleToken={handleToken} />} />
         <Route path="/login" element={<Login handleToken={handleToken} />} />
+        <Route path="/publish" element={<Publish token={token} />} />
       </Routes>
     </Router>
   );

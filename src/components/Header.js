@@ -19,7 +19,7 @@ const Header = ({handleToken, token}) => {
       // console.log(response.data.offers);
       setOffers(response.data.offers);
       setError(null);
-    } catch (e) {
+    } catch (error) {
       setError("Une erreur s'est produite lors du filtrage des offres.");
     }
   };
@@ -27,14 +27,17 @@ const Header = ({handleToken, token}) => {
   return (
     <header>
       {token ? (
-        <button
-          onClick={() => {
-            handleToken(null);
-            // Cookies.remove("token-vinted");
-          }}
-        >
-          Se déconnecter
-        </button>
+        <>
+          <button
+            onClick={() => {
+              handleToken(null);
+              // Cookies.remove("token-vinted");
+            }}
+          >
+            Se déconnecter
+          </button>
+          <Link to="/publish">Publier</Link>
+        </>
       ) : (
         <>
           <Link to="/signup">S'inscrire</Link>
@@ -45,21 +48,21 @@ const Header = ({handleToken, token}) => {
         type="text"
         placeholder="Titre"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={(event) => setTitle(event.target.value)}
       />
       <input
         type="number"
         placeholder="Prix minimum"
         value={priceMin}
-        onChange={(e) => setPriceMin(e.target.value)}
+        onChange={(event) => setPriceMin(event.target.value)}
       />
       <input
         type="number"
         placeholder="Prix maximum"
         value={priceMax}
-        onChange={(e) => setPriceMax(e.target.value)}
+        onChange={(event) => setPriceMax(event.target.value)}
       />
-      <select value={sort} onChange={(e) => setSort(e.target.value)}>
+      <select value={sort} onChange={(event) => setSort(event.target.value)}>
         <option value="price-desc">Prix décroissant</option>
         <option value="price-asc">Prix croissant</option>
       </select>
