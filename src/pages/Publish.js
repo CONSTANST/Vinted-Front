@@ -15,13 +15,13 @@ const Publish = ({token}) => {
   const [etat, setetat] = useState("");
   const [lieu, setlieu] = useState("");
   const [price, setprice] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
+  const [isExchangeAccept, setExchangeAccept] = useState(false);
 
   const handleImageChange = (event) => {
     setPicture(event.target.files[0]);
   };
   const handleCheckboxChange = (event) => {
-    setIsChecked(event.target.checked);
+    setExchangeAccept(event.target.checked);
   };
 
   const handleSubmit = async (event, token) => {
@@ -130,7 +130,7 @@ const Publish = ({token}) => {
           <label>
             <input
               type="checkbox"
-              checked={isChecked}
+              checked={isExchangeAccept}
               onChange={handleCheckboxChange}
             />
             Je suis intéressé(e) par les échanges.
