@@ -1,9 +1,4 @@
-import {
-  CartElement,
-  useStripe,
-  useElements,
-  CardElement,
-} from "@stripe/react-stripe-js";
+import {CardElement, useStripe, useElements} from "@stripe/react-stripe-js";
 import axios from "axios";
 import {useState} from "react";
 import {Navigate} from "react-router-dom";
@@ -15,30 +10,30 @@ const CheckoutForm = ({token}) => {
   // State servant à savoir si ma requête attend toujours une réponse et à savoir si le paiement a été effectué
   const location = useLocation();
   const {title, price} = location.state;
-
+  // console.log(title);
+  // console.log(price);
   const stripe = useStripe();
-  const element = useElements();
+  const elements = useElements();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       setIsLoading(true);
-      const cardElement = element.getElement(CartElement);
+      const cardElement = elements.getElement(CardElement);
       //
       console.log(cardElement);
       //
       const stripeResponse = await stripe.createToken(cardElement, {
         name: "L'id de l'acheteur",
-      }); //
+      });
       console.log(stripeResponse);
-      //
       const stripeToken = stripeResponse.token.id;
       //
       console.log(stripeToken);
       //
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/payment",
-        {stripeToken: stripeToken, title: title, amout: price}
+        {token: stripeToken, title: title, amount: price}
       );
       //
       console.log(response.data);
@@ -48,7 +43,8 @@ const CheckoutForm = ({token}) => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
+      console.log(error.response.data);
     }
   };
   return token ? (
