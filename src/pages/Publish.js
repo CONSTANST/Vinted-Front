@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 const Publish = ({token}) => {
   //   const [email, setEmail] = useState("");
@@ -61,7 +62,7 @@ const Publish = ({token}) => {
   // //
   // // };
 
-  return (
+  return token ? (
     <div className="App">
       <Link to="/">Revenir vers la page d'acceuil</Link>
       <h2> Vends ton article </h2>
@@ -179,6 +180,8 @@ const Publish = ({token}) => {
         <input type="submit" />
       </form>
     </div>
+  ) : (
+    <Navigate to="/Login"></Navigate>
   );
 };
 export default Publish;

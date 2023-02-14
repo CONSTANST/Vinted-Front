@@ -1,16 +1,16 @@
 import "./App.css";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import {useState} from "react";
-
+import Cookies from "js-cookie";
 // Pages
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
 import SignUp from "./pages/Signup";
 import Login from "./pages/Login";
+import Publish from "./pages/Publish";
+
 // Component
 import Header from "./components/Header";
-import Cookies from "js-cookie";
-import Publish from "./pages/Publish";
 
 function App() {
   const [token, setToken] = useState(Cookies.get("token-vinted") || null);
