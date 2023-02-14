@@ -36,7 +36,7 @@ const CheckoutForm = ({token}) => {
         {token: stripeToken, title: title, amount: price}
       );
       //
-      console.log(response);
+      // console.log(response);
       console.log(response.data);
       //
       if (response.data === "succeeded") {
@@ -51,8 +51,10 @@ const CheckoutForm = ({token}) => {
   return token ? (
     <form style={{width: "500px"}} onSubmit={handleSubmit}>
       <h3> Résumé de la commande</h3>
-      <p>{title}</p>
-      <p>{price}</p>
+      <p>
+        <span>{title} :</span>
+        <span>{price}</span>
+      </p>
       <CardElement />
       {completed ? (
         <p>Paiement effectué</p>
