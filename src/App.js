@@ -8,6 +8,7 @@ import Offer from "./pages/Offer";
 import SignUp from "./pages/Signup";
 import Login from "./pages/Login";
 import Publish from "./pages/Publish";
+// import Publier from "./pages/Publier";
 
 // Component
 import Header from "./components/Header";

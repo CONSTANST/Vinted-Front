@@ -1,137 +1,100 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {Navigate} from "react-router-dom";
 
 const Publish = ({token}) => {
-  //   const [email, setEmail] = useState("");
-  //   const [username, setUsername] = useState("");
   const [picture, setPicture] = useState();
-  const [imageToDisplay, setImageToDisplay] = useState();
-  const [titre, settitre] = useState("");
-  const [description, setdescription] = useState("");
-  const [marque, setmarque] = useState("");
-  const [taille, settaille] = useState("");
-  const [color, setcolor] = useState("");
-  const [etat, setetat] = useState("");
-  const [lieu, setlieu] = useState("");
-  const [price, setprice] = useState("");
-  const [isExchangeAccept, setExchangeAccept] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [brand, setBrand] = useState("");
+  const [size, setSize] = useState("");
+  const [color, setColor] = useState("");
+  const [condition, setCondition] = useState("");
+  const [city, setCity] = useState("");
+  const [price, setPrice] = useState("");
+  const [isExchangeAccepted, setIsExchangeAccepted] = useState();
 
   const handleImageChange = (event) => {
     setPicture(event.target.files[0]);
   };
   const handleCheckboxChange = (event) => {
-    setExchangeAccept(event.target.checked);
+    setIsExchangeAccepted(event.target.checked);
   };
-  console.log(token);
-  // const tokens = token;
-  // const handleSubmit = async (event, token) => {
-  //   event.preventDefault();
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("Titre", titre);
-  //     formData.append("description", description);
-  //     formData.append("picture", picture);
-  //     formData.append("Marque", marque);
-  //     formData.append("taille", taille);
-  //     formData.append("color", color);
-  //     formData.append("état", etat);
-  //     formData.append("lieu", lieu);
-  //     formData.append("price", price);
-  //     formData.append("échange", isExchangeAccept);
-  //     // console.log(token);
-  //     const response = await axios.post(
-  //       "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
-  //       formData,
-  //       {
-  //         headers: {
-  //           authorization: `Bearer ${token}`,
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  //     // console.log(token);
-  //     console.log(response);
-  //     setImageToDisplay(response.data);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-  // // const handleSubmit = async (event, token) => {
-  // //
-  // // };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("condition", condition);
+      formData.append("city", city);
+      formData.append("brand", brand);
+      formData.append("size", size);
+      formData.append("color", color);
+      formData.append("picture", picture);
+
+      const response = await axios.post(
+        "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
   return token ? (
-    <div className="App">
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Link to="/">Revenir vers la page d'acceuil</Link>
-      <h2> Vends ton article </h2>
-      <form
-        onSubmit={async (event, token) => {
-          event.preventDefault();
-          try {
-            const formData = new FormData();
-            formData.append("Titre", titre);
-            formData.append("description", description);
-            formData.append("picture", picture);
-            formData.append("Marque", marque);
-            formData.append("taille", taille);
-            formData.append("color", color);
-            formData.append("état", etat);
-            formData.append("lieu", lieu);
-            formData.append("price", price);
-            formData.append("échange", isExchangeAccept);
-            // console.log(token);
-            const response = await axios.post(
-              "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
-              formData,
-              {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                  "Content-Type": "multipart/form-data",
-                },
-              }
-            );
-            // console.log(token);
-            console.log(response);
-            setImageToDisplay(response.data);
-          } catch (error) {
-            console.log(error.message);
-          }
-        }}
-      >
+      <h2>Vend ton article</h2>
+      <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleImageChange} />
-        {imageToDisplay && <img src={imageToDisplay.secure_url} alt="" />}
+        {picture && <img src={URL.createObjectURL(picture)} alt="product" />}
         <input
-          value={titre}
+          value={title}
           type="texte"
           placeholder="Ex: Chemise sézane verte"
           onChange={(event) => {
-            settitre(event.target.value);
+            setTitle(event.target.value);
           }}
         />
-        <input
+        <textarea
           value={description}
-          type="texte"
-          placeholder="Ex: neuve"
+          id="Décris ton article"
           onChange={(event) => {
-            setdescription(event.target.value);
+            setDescription(event.target.value);
           }}
         />
         <input
-          value={marque}
+          value={brand}
           type="text"
           placeholder="Ex: zara"
           onChange={(event) => {
-            setmarque(event.target.value);
+            setBrand(event.target.value);
           }}
         />
         <input
-          value={taille}
+          value={size}
           type="text"
           placeholder="Ex: L/40/12"
           onChange={(event) => {
-            settaille(event.target.value);
+            setSize(event.target.value);
           }}
         />
         <input
@@ -139,23 +102,23 @@ const Publish = ({token}) => {
           type="text"
           placeholder="Ex: Fushia"
           onChange={(event) => {
-            setcolor(event.target.value);
+            setColor(event.target.value);
           }}
         />
         <input
-          value={etat}
+          value={condition}
           type="text"
           placeholder="Ex: Neuf avec étiquette"
           onChange={(event) => {
-            setetat(event.target.value);
+            setCondition(event.target.value);
           }}
         />
         <input
-          value={lieu}
+          value={city}
           type="text"
           placeholder="Ex: Paris"
           onChange={(event) => {
-            setlieu(event.target.value);
+            setCity(event.target.value);
           }}
         />
         <>
@@ -164,24 +127,24 @@ const Publish = ({token}) => {
             type="text"
             placeholder="0,00€"
             onChange={(event) => {
-              setprice(event.target.value);
+              setPrice(event.target.value);
             }}
           />
           <label>
             <input
               type="checkbox"
-              checked={isExchangeAccept}
+              checked={isExchangeAccepted}
               onChange={handleCheckboxChange}
             />
             Je suis intéressé(e) par les échanges.
           </label>
         </>
 
-        <input type="submit" />
+        <input type="submit" value="Publier l'offre" />
       </form>
     </div>
   ) : (
-    <Navigate to="/Login"></Navigate>
+    <Navigate to="/login" />
   );
 };
 export default Publish;
