@@ -5,13 +5,7 @@ const OfferCard = ({offerInfos}) => {
   return (
     // <p>salut</p>
     <Link to={`/offer/${offerInfos._id}`} style={{textDecoration: "none"}}>
-      <article
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "30px",
-        }}
-      >
+      <article>
         <div style={{display: "flex", alignItems: "center"}}>
           {/* Si le vendeur a un avatar, je l'affiche */}
           {offerInfos.owner.account.avatar && (
@@ -28,20 +22,9 @@ const OfferCard = ({offerInfos}) => {
           )}
           <span>{offerInfos.owner.account.username}</span>
         </div>
-        <img
-          src={offerInfos.product_image.secure_url}
-          alt="product"
-          style={{
-            height: 600,
-            width: 575,
-            objectFit: "cover",
-            marginLeft: "165px",
-          }}
-        />
-        <div style={{width: "605px", height: "400px", marginLeft: "165px"}}>
-          <p style={{fontWeight: "bold", fontSize: "20px"}}>
-            {offerInfos.product_price} €
-          </p>{" "}
+        <img src={offerInfos.product_image.secure_url} alt="product" />
+        <div style={{display: "flex", flexDirection: "column-reverse"}}>
+          <p>{offerInfos.product_price} €</p>{" "}
           {offerInfos.product_details.map((detail, index) => {
             // console.log(detail);
             // Si l'objet detail a une clef TAILLE, je l'affiche
