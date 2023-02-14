@@ -37,7 +37,6 @@ const Header = ({handleToken, token}) => {
             Se déconnecter
           </button>
           <Link to="/publish">Publish</Link>
-          <Link to="/publier">Publier</Link>
         </>
       ) : (
         <>

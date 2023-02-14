@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Offer = () => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   // Je récupère l'id présent dans l'url
   const params = useParams();
@@ -26,7 +29,11 @@ const Offer = () => {
     };
     fetchData();
   }, [id]);
-
+  const handleBuy = () => {
+    navigate("/Payment", {
+      state: {title: data.product_name, price: data.product_price},
+    });
+  };
   return isLoading ? (
     <p>Loading ...</p>
   ) : (
@@ -51,6 +58,7 @@ const Offer = () => {
       <p>{data.product_name}</p>
       <p>{data.product_description}</p>
       <p>{data.owner.account.username}</p>
+      <button onClick={handleBuy}>Acheter</button>
     </div>
   );
 };
