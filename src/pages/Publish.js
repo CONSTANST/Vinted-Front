@@ -23,43 +23,82 @@ const Publish = ({token}) => {
   const handleCheckboxChange = (event) => {
     setExchangeAccept(event.target.checked);
   };
-
-  const handleSubmit = async (event, token) => {
-    event.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("Titre", titre);
-      formData.append("description", description);
-      formData.append("picture", picture);
-      formData.append("Marque", marque);
-      formData.append("taille", taille);
-      formData.append("color", color);
-      formData.append("état", etat);
-      formData.append("lieu", lieu);
-      formData.append("price", price);
-
-      const response = await axios.post(
-        "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
-        formData,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log(response);
-      setImageToDisplay(response.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  console.log(token);
+  // const tokens = token;
+  // const handleSubmit = async (event, token) => {
+  //   event.preventDefault();
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("Titre", titre);
+  //     formData.append("description", description);
+  //     formData.append("picture", picture);
+  //     formData.append("Marque", marque);
+  //     formData.append("taille", taille);
+  //     formData.append("color", color);
+  //     formData.append("état", etat);
+  //     formData.append("lieu", lieu);
+  //     formData.append("price", price);
+  //     formData.append("échange", isExchangeAccept);
+  //     // console.log(token);
+  //     const response = await axios.post(
+  //       "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
+  //       formData,
+  //       {
+  //         headers: {
+  //           authorization: `Bearer ${token}`,
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     // console.log(token);
+  //     console.log(response);
+  //     setImageToDisplay(response.data);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+  // // const handleSubmit = async (event, token) => {
+  // //
+  // // };
 
   return (
     <div className="App">
       <Link to="/">Revenir vers la page d'acceuil</Link>
       <h2> Vends ton article </h2>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={async (event, token) => {
+          event.preventDefault();
+          try {
+            const formData = new FormData();
+            formData.append("Titre", titre);
+            formData.append("description", description);
+            formData.append("picture", picture);
+            formData.append("Marque", marque);
+            formData.append("taille", taille);
+            formData.append("color", color);
+            formData.append("état", etat);
+            formData.append("lieu", lieu);
+            formData.append("price", price);
+            formData.append("échange", isExchangeAccept);
+            // console.log(token);
+            const response = await axios.post(
+              "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                  "Content-Type": "multipart/form-data",
+                },
+              }
+            );
+            // console.log(token);
+            console.log(response);
+            setImageToDisplay(response.data);
+          } catch (error) {
+            console.log(error.message);
+          }
+        }}
+      >
         <input type="file" onChange={handleImageChange} />
         {imageToDisplay && <img src={imageToDisplay.secure_url} alt="" />}
         <input
@@ -137,7 +176,7 @@ const Publish = ({token}) => {
           </label>
         </>
 
-        <input type="submit" onSubmit={handleSubmit} />
+        <input type="submit" />
       </form>
     </div>
   );
