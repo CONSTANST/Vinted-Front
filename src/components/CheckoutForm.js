@@ -21,12 +21,12 @@ const CheckoutForm = ({token}) => {
       setIsLoading(true);
       const cardElement = elements.getElement(CardElement);
       //
-      console.log(cardElement);
+      // console.log(cardElement);
       //
       const stripeResponse = await stripe.createToken(cardElement, {
         name: "L'id de l'acheteur",
       });
-      console.log(stripeResponse);
+      // console.log(stripeResponse);
       const stripeToken = stripeResponse.token.id;
       //
       console.log(stripeToken);
@@ -36,6 +36,7 @@ const CheckoutForm = ({token}) => {
         {token: stripeToken, title: title, amount: price}
       );
       //
+      console.log(response);
       console.log(response.data);
       //
       if (response.data === "succeeded") {
