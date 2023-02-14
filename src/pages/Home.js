@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import OfferCard from "../components/OfferCard";
 
@@ -25,9 +25,22 @@ const Home = () => {
   return isLoading ? (
     <p>Loading ...</p>
   ) : (
-    <div>
+    <div style={{"font-size": 0, "text-align": "center"}}>
       {data.offers.map((offer) => {
-        return <OfferCard offerInfos={offer} key={offer._id} />;
+        return (
+          <div
+            style={{
+              display: "inline-block",
+              width: "24%",
+              margin: "1%",
+              verticalAlign: "top",
+              fontSize: "16px",
+              textAlign: "left",
+            }}
+          >
+            <OfferCard offerInfos={offer} key={offer._id} />
+          </div>
+        );
       })}
     </div>
   );

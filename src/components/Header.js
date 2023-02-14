@@ -25,7 +25,7 @@ const Header = ({handleToken, token}) => {
   };
 
   return (
-    <header>
+    <header style={{height: "120px"}}>
       {token ? (
         <>
           <button

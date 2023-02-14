@@ -9,7 +9,15 @@ const stripePromise = loadStripe(
 );
 const Payment = ({token}) => {
   return token ? (
-    <div>
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Elements stripe={stripePromise}>
         <CheckoutForm token={token} />
       </Elements>
